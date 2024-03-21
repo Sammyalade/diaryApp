@@ -1,0 +1,11 @@
+package datas.models;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
+public class Diary {
+    @Id
+    private String username;
+    private String password;
+}
