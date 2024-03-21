@@ -1,4 +1,4 @@
-package datas.models;
+package africa.semicolon.dairyApp.datas.models;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
