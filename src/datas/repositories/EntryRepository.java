@@ -1,4 +1,8 @@
 package datas.repositories;
 
-public interface EntryRepository {
+import datas.models.Entry;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface EntryRepository extends MongoRepository<Entry, String> {
+
 }
