@@ -9,4 +9,5 @@ public class EntryCreationRequest {
 
     private String title;
     private String body;
+    private String username;
 }
