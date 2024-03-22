@@ -10,4 +10,5 @@ public class Diary {
     @Id
     private String username;
     private String password;
+    private boolean isLocked;
 }
