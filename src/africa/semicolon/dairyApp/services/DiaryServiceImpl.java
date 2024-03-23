@@ -5,14 +5,17 @@ import africa.semicolon.dairyApp.datas.models.Entry;
 import africa.semicolon.dairyApp.datas.repositories.DiaryRepository;
 import dtos.*;
 import exceptions.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class DiaryServiceImpl implements DiaryService {
-    private static DiaryRepository repository;
-    private final EntryService entryService = new EntryServiceImpl();
+    @Autowired
+    private DiaryRepository repository;
+    @Autowired
+    private EntryService entryService;
 
 
     @Override
