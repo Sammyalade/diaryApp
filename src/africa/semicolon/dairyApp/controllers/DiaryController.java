@@ -1,18 +1,14 @@
 package africa.semicolon.dairyApp.controllers;
 
 import africa.semicolon.dairyApp.services.DiaryService;
-import africa.semicolon.dairyApp.services.DiaryServiceImpl;
 import africa.semicolon.dairyApp.services.EntryService;
-import africa.semicolon.dairyApp.services.EntryServiceImpl;
 import dtos.EntryCreationRequest;
 import dtos.EntryDeleteRequest;
 import dtos.LoginRequest;
 import dtos.RegisterRequest;
 import exceptions.DiaryAppException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class DiaryController {
@@ -34,7 +30,7 @@ public class DiaryController {
     }
 
     @PostMapping("/diary/login")
-    public String login(LoginRequest loginRequest){
+    public String login(@RequestBody LoginRequest loginRequest){
         try {
             diaryService.login(loginRequest);
             return "Login Successful";
@@ -43,7 +39,8 @@ public class DiaryController {
         }
     }
 
-    public String logout(String username){
+    @PatchMapping("/logout/{name}")
+    public String logout(@PathVariable("name") String username){
         try{
             diaryService.logout(username);
             return "Thank you for using our app";
@@ -52,7 +49,8 @@ public class DiaryController {
         }
     }
 
-    public String createEntry(EntryCreationRequest entryCreationRequest){
+    @PostMapping("diary/createEntry")
+    public String createEntry(@RequestBody EntryCreationRequest entryCreationRequest){
         try{
             return diaryService.createEntry(entryCreationRequest).toString();
         } catch(DiaryAppException e){
@@ -60,7 +58,8 @@ public class DiaryController {
         }
     }
 
-    public String getAllEntriesBy(String username){
+    @GetMapping("diary/getAllEntries/{name}")
+    public String getAllEntriesBy(@PathVariable("name") String username){
         try {
             return entryService.getAllEntries(username).toString();
         } catch (DiaryAppException e){
@@ -68,7 +67,8 @@ public class DiaryController {
         }
     }
 
-    public String deleteEntry(EntryDeleteRequest entryDeleteRequest) {
+    @PostMapping("/diary/deleteEntry")
+    public String deleteEntry(@RequestBody EntryDeleteRequest entryDeleteRequest) {
         try {
             diaryService.deleteEntry(entryDeleteRequest);
             return "Entry successfully deleted";
@@ -76,7 +76,9 @@ public class DiaryController {
             return e. getMessage();
         }
     }
-    public void changePassword(LoginRequest loginRequest){
+
+    @PatchMapping("/diary/changePassword/{newPassword}")
+    public void changePassword(@PathVariable("newPassword") LoginRequest loginRequest){
         diaryService.changePassword(loginRequest);
     }
 }
