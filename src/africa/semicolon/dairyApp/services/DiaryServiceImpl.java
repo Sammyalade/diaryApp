@@ -1,15 +1,9 @@
-package services;
+package africa.semicolon.dairyApp.services;
 
 import africa.semicolon.dairyApp.datas.models.Diary;
 import africa.semicolon.dairyApp.datas.models.Entry;
 import africa.semicolon.dairyApp.datas.repositories.DiaryRepository;
-import africa.semicolon.dairyApp.services.DiaryService;
-import africa.semicolon.dairyApp.services.EntryService;
-import africa.semicolon.dairyApp.services.EntryServiceImpl;
-import dtos.EntryCreationRequest;
-import dtos.EntryUpdateRequest;
-import dtos.LoginRequest;
-import dtos.RegisterRequest;
+import dtos.*;
 import exceptions.*;
 import org.springframework.stereotype.Service;
 
@@ -64,25 +58,16 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public void updateEntry(EntryUpdateRequest entryUpdateRequest) {
-        Entry entry = entryService.checkEntryBy(entryUpdateRequest.getId());
-        if (entry == null) {
-            throw new NoSuchEntryException("No such entry attached to this user");
-        }
-        entryService.update(entryUpdateRequest);
-    }
-
-    @Override
     public void getAllEntries(String username) {
         findUser(username);
         entryService.getAllEntries("username");
     }
 
     @Override
-    public Entry checkEntryById(String username, long id) {
-        findUser(username);
-        Entry entry = entryService.checkEntryBy(id);
-        if(entry.getAuthor().equals(username)){
+    public Entry checkEntryByTitle(EntryAccessRequest entryAccessRequest) {
+        findUser(entryAccessRequest.getUsername());
+        Entry entry = entryService.checkEntryBy(entryAccessRequest.getTitle());
+        if(entry.getAuthor().equals(entryAccessRequest.getUsername())){
             return entry;
         }
         throw new NoSuchEntryException("No such entry");
@@ -95,9 +80,9 @@ public class DiaryServiceImpl implements DiaryService {
 
 
     @Override
-    public void deleteEntry(String username, long id) {
-        findUser(username);
-        entryService.delete(entryService.checkEntryBy(id));
+    public void deleteEntry(EntryDeleteRequest entryDeleteRequest) {
+        findUser(entryDeleteRequest.getUsername());
+        entryService.delete(entryService.checkEntryBy(entryDeleteRequest.getTitle()));
     }
 
 
