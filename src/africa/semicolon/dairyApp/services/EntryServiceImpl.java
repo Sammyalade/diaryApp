@@ -3,6 +3,7 @@ package africa.semicolon.dairyApp.services;
 import africa.semicolon.dairyApp.datas.models.Entry;
 import africa.semicolon.dairyApp.datas.repositories.EntryRepository;
 import dtos.EntryCreationRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,7 +12,8 @@ import java.util.List;
 @Service
 public class EntryServiceImpl implements EntryService{
 
-    private static EntryRepository entryRepository;
+    @Autowired
+    private EntryRepository entryRepository;
 
     @Override
     public Entry create(EntryCreationRequest entryCreationRequest) {
