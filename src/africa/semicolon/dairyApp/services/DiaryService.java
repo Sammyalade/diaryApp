@@ -2,7 +2,8 @@ package africa.semicolon.dairyApp.services;
 
 import africa.semicolon.dairyApp.datas.models.Diary;
 import africa.semicolon.dairyApp.datas.models.Entry;
-import dtos.*;
+import africa.semicolon.dairyApp.dtos.*;
+
 import org.springframework.stereotype.Service;
 
 @Service
