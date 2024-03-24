@@ -3,8 +3,8 @@ package africa.semicolon.dairyApp.services;
 import africa.semicolon.dairyApp.datas.models.Diary;
 import africa.semicolon.dairyApp.datas.models.Entry;
 import africa.semicolon.dairyApp.datas.repositories.DiaryRepository;
-import dtos.*;
-import exceptions.*;
+import africa.semicolon.dairyApp.dtos.*;
+import africa.semicolon.dairyApp.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,21 +20,28 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public Diary register(RegisterRequest registerRequest) {
-        if(registerRequest.getUsername().isEmpty() || registerRequest.getPassword().isEmpty())
+        if (registerRequest.getUsername().trim().isEmpty() || registerRequest.getPassword().isEmpty()) {
             throw new EmptyStringException("Username or Password cannot be empty");
-        if(repository.findById(registerRequest.getUsername()) == null) {
-            return createDiary(registerRequest);
         }
-        throw new UsernameTakenException("Username is taken");
+        Optional<Diary> existingDiary = repository.findById(registerRequest.getUsername());
+        if (existingDiary.isPresent()) {
+            throw new UsernameTakenException("Username is taken");
+        }
+        return createDiary(registerRequest);
     }
 
     @Override
     public void login(LoginRequest loginRequest) {
-        Optional<Diary> diaryToFind = findUser(loginRequest.getUsername());
-        validatePassword(diaryToFind.get().getPassword(), loginRequest.getPassword());
-        diaryToFind.get().setLocked(false);
-        repository.save(diaryToFind.get());
+        Optional<Diary> diaryToFind = findUser(loginRequest.getUsername().toLowerCase());
+        if (diaryToFind.isEmpty()) {
+            throw new UserNotFoundException("User not found");
+        }
+        Diary diary = diaryToFind.get();
+        validatePassword(diary.getPassword(), loginRequest.getPassword());
+        diary.setLocked(false);
+        repository.save(diary);
     }
+
 
     @Override
     public void logout(String username) {
@@ -118,7 +125,7 @@ public class DiaryServiceImpl implements DiaryService {
 
     private Diary createDiary(RegisterRequest registerRequest) {
         Diary newDiary = new Diary();
-        newDiary.setUsername(registerRequest.getUsername());
+        newDiary.setUsername(registerRequest.getUsername().toLowerCase());
         newDiary.setPassword(registerRequest.getPassword());
         return repository.save(newDiary);
     }
