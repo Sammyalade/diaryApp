@@ -1,4 +1,4 @@
-package dtos;
+package africa.semicolon.dairyApp.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
