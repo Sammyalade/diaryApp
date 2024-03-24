@@ -2,7 +2,7 @@ package africa.semicolon.dairyApp.services;
 
 import africa.semicolon.dairyApp.datas.models.Entry;
 import africa.semicolon.dairyApp.datas.repositories.EntryRepository;
-import dtos.EntryCreationRequest;
+import africa.semicolon.dairyApp.dtos.EntryCreationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
