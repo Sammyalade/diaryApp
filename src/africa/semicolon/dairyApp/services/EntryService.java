@@ -1,7 +1,7 @@
 package africa.semicolon.dairyApp.services;
 
 import africa.semicolon.dairyApp.datas.models.Entry;
-import dtos.EntryCreationRequest;
+import africa.semicolon.dairyApp.dtos.EntryCreationRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
