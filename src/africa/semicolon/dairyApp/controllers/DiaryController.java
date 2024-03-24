@@ -2,11 +2,11 @@ package africa.semicolon.dairyApp.controllers;
 
 import africa.semicolon.dairyApp.services.DiaryService;
 import africa.semicolon.dairyApp.services.EntryService;
-import dtos.EntryCreationRequest;
-import dtos.EntryDeleteRequest;
-import dtos.LoginRequest;
-import dtos.RegisterRequest;
-import exceptions.DiaryAppException;
+import africa.semicolon.dairyApp.dtos.EntryCreationRequest;
+import africa.semicolon.dairyApp.dtos.EntryDeleteRequest;
+import africa.semicolon.dairyApp.dtos.LoginRequest;
+import africa.semicolon.dairyApp.dtos.RegisterRequest;
+import africa.semicolon.dairyApp.exceptions.DiaryAppException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
